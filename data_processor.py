@@ -14,7 +14,6 @@ OUTPUT_DIR = 'app_data'
 FAISS_INDEX_PATH = os.path.join(OUTPUT_DIR, 'book_index.faiss')
 DATA_PATH = os.path.join(OUTPUT_DIR, 'book_data.pkl')
 
-# --- Create output directory if it doesn't exist ---
 if not os.path.exists(OUTPUT_DIR):
     os.makedirs(OUTPUT_DIR)
 
@@ -26,11 +25,9 @@ except FileNotFoundError:
     print(f"Error: '{CSV_PATH}' not found. Please place it in the same directory.")
     exit()
 
-# Clean up data: drop rows with missing titles as they are essential
 df.dropna(subset=['Title'], inplace=True)
 df.reset_index(drop=True, inplace=True)
 
-# Combine text fields into a single 'content' column for embedding
 df['content'] = df['Title'].fillna('') + '. ' + df['Description'].fillna('') + ' Category: ' + df['Category'].fillna('')
 corpus = df['content'].tolist()
 print(f"Data loaded. Total entries to process: {len(corpus)}")
@@ -55,8 +52,6 @@ faiss.write_index(index, FAISS_INDEX_PATH)
 print(f"Faiss index built and saved to {FAISS_INDEX_PATH}")
 
 # --- Step 5: Save Processed DataFrame ---
-# We only need the 'Title' for lookup, but saving a bit more can be useful.
-# Let's keep Title, Authors, and Description for display purposes.
 processed_df = df[['Title', 'Authors', 'Description']].copy()
 with open(DATA_PATH, 'wb') as f:
     pickle.dump(processed_df, f)

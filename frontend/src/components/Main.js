@@ -7,9 +7,7 @@ const BotMessageContent = ({ message }) => {
     return <div dangerouslySetInnerHTML={{ __html: message.content }} />;
   }
 
-  // Check if the message contains data to render
   if (message.data) {
-    // For a list of recommendations from your local data
     if (message.data.type === 'title_recommendation') {
       return (
         <div>
@@ -28,7 +26,6 @@ const BotMessageContent = ({ message }) => {
       );
     }
 
-    // For detailed book info from the Gemini API (from either click or text)
     if (message.data.type === 'gemini_details') {
         const { title, author, category, description } = message.data.details;
         return (
@@ -42,7 +39,6 @@ const BotMessageContent = ({ message }) => {
     }
   }
 
-  // Fallback for any unexpected message structure
   return <div>...</div>;
 };
 
@@ -52,6 +48,8 @@ const Main = () => {
   const [userInput, setUserInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const chatWindowRef = useRef(null);
+
+  const apiUrl = process.env.REACT_APP_API_URL || 'http://127.0.0.1:5001';
 
   useEffect(() => {
     setMessages([{ author: 'bot', content: "Welcome to BookVoyager.AI! Enter a book title to get recommendations." }]);
@@ -63,12 +61,11 @@ const Main = () => {
     }
   }, [messages]);
 
-  // Handle clicks on recommended books to get details from Gemini
   const fetchBookDetails = async (title) => {
     setIsLoading(true);
     setMessages(prev => [...prev, { author: 'user', content: `Tell me more about "${title.toUpperCase()}"` }]);
     try {
-        const response = await fetch('http://127.0.0.1:5001/get_book_details', {
+        const response = await fetch(`${apiUrl}/get_book_details`, { 
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ book_title: title }),
@@ -85,7 +82,6 @@ const Main = () => {
     }
   };
   
-  // Handle form submission (sends to /chat for routing)
   const handleSendMessage = async (e) => {
     e.preventDefault();
     if (!userInput.trim()) return;
@@ -94,7 +90,7 @@ const Main = () => {
     setIsLoading(true);
     
     try {
-      const response = await fetch(`http://127.0.0.1:5001/chat`, {
+      const response = await fetch(`${apiUrl}/chat`, { 
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ message: userInput }),
@@ -110,7 +106,6 @@ const Main = () => {
     }
   };
   
-  // Use event delegation to handle clicks on book links
   const handleChatClick = (e) => {
       if (e.target.classList.contains('book-detail-link')) {
           e.preventDefault();
@@ -122,10 +117,7 @@ const Main = () => {
   return (
     <div className="chat-container">
       <div className="chat-header">
-        <div className="header-link">
-          <span>Return to: </span>
-          <Link to="/" className="back-button">Home Page</Link>
-        </div>
+        <Link to="/" className="back-button">Return to Home Page!</Link>
       </div>
 
       <div className="chat-window" ref={chatWindowRef} onClick={handleChatClick}>
@@ -147,7 +139,7 @@ const Main = () => {
           className="message-input"
         />
         <button type="submit" disabled={isLoading} className="send-button">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" transform="rotate(0)">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ transform: 'rotate(0deg)' }}>
             <path d="M7 11L12 6L17 11M12 18V7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
           </svg>
         </button>

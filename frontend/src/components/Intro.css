@@ -43,8 +43,8 @@
 .intro-button {
   display: inline-block;
   text-decoration: none;
-  background: linear-gradient(135deg, #ffe135, #d4a017); /* Polished gold gradient */
-  color: #0f0f0f; /* Dark text for contrast */
+  background: linear-gradient(135deg, #ffe135, #d4a017); 
+  color: #0f0f0f; 
   padding: 0.9rem 2rem;
   border-radius: 20px;
   font-weight: 600;

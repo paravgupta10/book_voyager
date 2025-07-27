@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import './Intro.css'; // We'll create this file next
+import './Intro.css'; 
 
 const Intro = () => {
   return (

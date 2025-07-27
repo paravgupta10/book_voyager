@@ -96,8 +96,8 @@
   border-radius: 18px;
   line-height: 1.5;
   word-wrap: break-word;
-  background: linear-gradient(135deg, #f5e8c7, #e9d8a6); /* Parchment-like texture */
-  color: #3c2f2f; /* Dark brown text */
+  background: linear-gradient(135deg, #f5e8c7, #e9d8a6); 
+  color: #3c2f2f; 
   box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.2), 0 2px 5px rgba(0, 0, 0, 0.3);
   animation: fadeIn 0.3s ease-out;
 }
@@ -155,7 +155,7 @@
 .input-form {
   padding: 1rem 1.5rem;
   border-top: 1px solid rgba(255, 225, 53, 0.05);
-  background: #3c2f2f; /* Leather-bound effect */
+  background: #3c2f2f; 
   display: flex;
   align-items: center;
   gap: 0.5rem;
@@ -164,11 +164,11 @@
 
 .message-input {
   flex: 1;
-  border: 2px solid #ffe135; /* Golden border */
+  border: 2px solid #ffe135; 
   border-radius: 20px;
   padding: 0.9rem 1.2rem;
   font-size: 1rem;
-  background: #4a3c2f; /* Lighter leather shade */
+  background: #4a3c2f; 
   color: #ffffff;
   transition: border-color 0.3s, box-shadow 0.3s, background 0.3s;
   box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5);
@@ -183,7 +183,7 @@
 
 .send-button {
   border: none;
-  background: linear-gradient(135deg, #ffe135, #d4a017); /* Polished gold gradient */
+  background: linear-gradient(135deg, #ffe135, #d4a017); 
   color: #0f0f0f;
   padding: 0.9rem 1.5rem;
   border-radius: 20px;
