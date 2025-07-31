@@ -17,14 +17,19 @@ load_dotenv()
 app = Flask(__name__)
 CORS(app)
 
-MODEL_NAME = 'all-MiniLM-L6-v2'
+model = None
+def get_model():
+    global model
+    if model is None:
+        model = SentenceTransformer('all-MiniLM-L6-v2')
+    return model
 DATA_DIR = 'app_data'
 FAISS_INDEX_PATH = os.path.join(DATA_DIR, 'book_index.faiss')
 DATA_PATH = os.path.join(DATA_DIR, 'book_data.pkl')
 
 print("Loading models and data...")
 try:
-    model = SentenceTransformer(MODEL_NAME)
+    model = get_model()
     index = faiss.read_index(FAISS_INDEX_PATH)
     df = pd.read_pickle(DATA_PATH)
     title_to_idx = pd.Series(df.index, index=df['Title'])
@@ -98,6 +103,7 @@ def chat():
         if match_score < 0.6:
             return jsonify({'error': f"Sorry, no book closely matches '{user_input}'."})
 
+        model = get_model()
         query_embedding = model.encode([best_match_title], convert_to_numpy=True)
         distances, indices = index.search(query_embedding, 15)
         recommended_df = df.iloc[indices[0]]
@@ -144,5 +150,3 @@ def get_book_details():
     return jsonify(details)
 
 
-if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5001, debug=True)
