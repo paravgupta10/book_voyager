@@ -16,8 +16,12 @@ const BotMessageContent = ({ message }) => {
             {message.data.recommendations.map((book, index) => (
               <div key={index} className="recommendation-card">
                 <span className="serial-number">{index + 1}.</span>
-                <a href="#" className="book-detail-link" data-title={book.title}>
-                  {book.title.toUpperCase()}
+                <a
+                  href="#"
+                  className="book-detail-link"
+                  data-title={book.title}
+                >
+                  {book.title ? book.title.toUpperCase() : 'UNKNOWN'}
                 </a>
               </div>
             ))}
@@ -27,15 +31,15 @@ const BotMessageContent = ({ message }) => {
     }
 
     if (message.data.type === 'gemini_details') {
-        const { title, author, category, description } = message.data.details;
-        return (
-            <div className="details-card">
-                <p className="details-title">{title.toUpperCase()}</p>
-                <p><strong>Author:</strong> {author}</p>
-                <p><strong>Category:</strong> {category}</p>
-                <p className="details-description">{description}</p>
-            </div>
-        )
+      const { title, author, category, description } = message.data.details || {};
+      return (
+        <div className="details-card">
+          <p className="details-title">{title ? title.toUpperCase() : 'UNKNOWN'}</p>
+          <p><strong>Author:</strong> {author || 'N/A'}</p>
+          <p><strong>Category:</strong> {category || 'N/A'}</p>
+          <p className="details-description">{description || 'No description available.'}</p>
+        </div>
+      );
     }
   }
 
