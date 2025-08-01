@@ -7,7 +7,6 @@ import pickle
 import os
 import time
 
-
 CSV_PATH = 'book-precompute.csv'
 MODEL_NAME = 'all-MiniLM-L6-v2'
 BATCH_SIZE = 256 
@@ -61,30 +60,18 @@ end_time = time.time()
 print(f"Embeddings generated in {end_time - start_time:.2f} seconds.")
 print(f"Shape of embeddings matrix: {corpus_embeddings.shape}")
 
-print("\n[Step 4/5] Building and saving a compressed Faiss index...")
+print("\n[Step 4/5] Building and saving Faiss flat index...")
 
-n_books = len(corpus_embeddings)
-nlist = max(1, int(np.sqrt(n_books)))  # ✅ Avoid nlist=0
-m = 8
-nbits = 8
+# 🔁 Using flat index (no training)
+index = faiss.IndexFlatL2(embedding_dim)
 
-quantizer = faiss.IndexFlatL2(embedding_dim)
-index = faiss.IndexIVFPQ(quantizer, embedding_dim, nlist, m, nbits)
-
-print(f"Training the index on {n_books} vectors...")
-index.train(corpus_embeddings)
-
-if not index.is_trained:
-    raise RuntimeError("FAISS index training failed.")
-
-print("Adding embeddings to the index...")
+print("Adding embeddings to the flat index...")
 index.add(corpus_embeddings)
 faiss.write_index(index, FAISS_INDEX_PATH)
-print(f"Compressed Faiss index with {index.ntotal} vectors saved to '{FAISS_INDEX_PATH}'")
+print(f"Flat Faiss index with {index.ntotal} vectors saved to '{FAISS_INDEX_PATH}'")
 
 print("\n[Step 5/5] Saving processed book data...")
 processed_df = df[['Title', 'Description', 'Category']].copy()
 with open(DATA_PATH, 'wb') as f:
     pickle.dump(processed_df, f)
 print(f"Book metadata saved to '{DATA_PATH}'")
-
