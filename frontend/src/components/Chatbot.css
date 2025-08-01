@@ -1,4 +1,3 @@
-/* --- Main Chat Container --- */
 .chat-container {
   width: 100%;
   max-width: 500px;
@@ -15,7 +14,6 @@
   font-family: 'Georgia', 'Times New Roman', serif; 
 }
 
-/* --- Chat Header --- */
 .chat-header {
   padding: 1.5rem 1.5rem 0.5rem;
   background: radial-gradient(circle, rgba(255, 225, 53, 0.15) 0%, rgba(15, 15, 15, 0.9) 70%);
@@ -45,7 +43,7 @@
   margin: 0;
   font-size: 1.5rem;
   color: #ffe135;
-  text-shadow: 0 0 10px rgba(255, 225, 53, 0.7); /* Golden glow */
+  text-shadow: 0 0 10px rgba(255, 225, 53, 0.7); 
   font-weight: 600;
   position: relative;
   z-index: 1;
@@ -63,7 +61,6 @@
   z-index: 1;
 }
 
-/* --- Chat Window --- */
 .chat-window {
   flex-grow: 1;
   padding: 1.5rem;
@@ -89,7 +86,6 @@
   border-radius: 4px;
 }
 
-/* --- Message Bubbles --- */
 .message {
   max-width: 80%;
   padding: 0.75rem 1rem;
@@ -115,7 +111,6 @@
   align-self: flex-end;
 }
 
-/* --- Suggestion Buttons --- */
 .suggestion-button {
   display: flex;
   align-items: center;
@@ -151,7 +146,6 @@
   font-weight: 600;
 }
 
-/* --- Input Form --- */
 .input-form {
   padding: 1rem 1.5rem;
   border-top: 1px solid rgba(255, 225, 53, 0.05);
@@ -211,7 +205,6 @@
   color:#eecf81;
 }
 
-/* --- Additional Elements --- */
 .info-button {
   background: none;
   border: none;
@@ -228,7 +221,6 @@
   margin-top: 0.5rem;
 }
 
-/* Responsive adjustments */
 @media (max-width: 768px) {
   .chat-container {
     max-width: 100%;

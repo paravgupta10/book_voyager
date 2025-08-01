@@ -1,4 +1,3 @@
-/* --- Intro Page Container --- */
 .intro-container {
   max-width: 600px;
   text-align: center;
@@ -55,4 +54,28 @@
   background: linear-gradient(135deg, #d4a017, #b8860b);
   transform: translateY(-3px);
   box-shadow: 0 5px 15px rgba(255, 225, 53, 0.4);
+}
+
+@media (max-width: 768px) {
+  .intro-container {
+    width: 90%;
+    padding: 2rem 1.5rem; 
+  }
+
+  .intro-heading {
+    font-size: 2.4rem; 
+  }
+
+  .intro-heading::before {
+    font-size: 2.2rem;
+  }
+
+  .intro-description {
+    font-size: 1.1rem;
+  }
+
+  .intro-button {
+    padding: 0.8rem 1.8rem;
+    font-size: 0.9rem;
+  }
 }
